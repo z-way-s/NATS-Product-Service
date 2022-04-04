@@ -1,1 +1,1 @@
-export const APP_DEFAULT = 'APP_DEFAULT';
+export const PRODUCT_SERVICE = 'PRODUCT_SERVICE';

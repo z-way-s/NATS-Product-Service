@@ -16,7 +16,7 @@ async function bootstrap() {
     },
   });
   await app.startAllMicroservices();
-  await app.listen(3000);
+  await app.listen(3004);
   console.log(`App Gateway is running on: ${await app.getUrl()}`);
 }
 bootstrap();
