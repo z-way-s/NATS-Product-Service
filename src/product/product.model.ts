@@ -87,3 +87,20 @@ export interface Product {
   isActive: boolean;
   isDeleted: boolean;
 }
+
+export type Type =
+  | 'title'
+  | 'price'
+  | 'description'
+  | 'image'
+  | 'gallery'
+  | 'createdAt'
+  | 'discount'
+  | 'category'
+  | 'subcategory'
+  | 'brand'
+  | 'rating'
+  | 'reviews'
+  | 'stock'
+  | 'isActive'
+  | 'isDeleted';

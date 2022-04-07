@@ -26,4 +26,24 @@ export class ProductController {
   updateProduct(@Payload() payload: any): Promise<Product> {
     return this.productService.updateProduct(payload.id, payload.data);
   }
+
+  @MessagePattern({ cmd: 'product.delete' })
+  deleteProduct(@Payload() payload: any): Promise<Product> {
+    return this.productService.deleteProduct(payload.id);
+  }
+
+  @MessagePattern({ cmd: 'product.getByType' })
+  getByType(@Payload() payload: any): Promise<Product[]> {
+    console.log(payload.type, payload.value);
+    return this.productService.getByType(payload.type, payload.value);
+  }
+
+  @MessagePattern({ cmd: 'product.getByRange' })
+  getByRange(@Payload() payload: any): Promise<Product[]> {
+    return this.productService.getByRange(
+      payload.type,
+      parseInt(payload?.min),
+      parseInt(payload?.max),
+    );
+  }
 }
