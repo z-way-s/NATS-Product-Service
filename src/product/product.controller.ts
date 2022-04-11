@@ -8,11 +8,11 @@ import { CreateProductDto } from './create-product.dto';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
+  // Basic CRUD
   @MessagePattern({ cmd: 'product.getAll' })
   getProducts(): Promise<Product[]> {
     return this.productService.getProducts();
   }
-
   @MessagePattern({ cmd: 'product.create' })
   createProduct(@Payload() payload: any): Promise<Product> {
     return this.productService.createProduct(payload.data);
@@ -21,23 +21,21 @@ export class ProductController {
   getProduct(@Payload() payload: any): Promise<Product> {
     return this.productService.getProduct(payload.id);
   }
-
   @MessagePattern({ cmd: 'product.update' })
   updateProduct(@Payload() payload: any): Promise<Product> {
     return this.productService.updateProduct(payload.id, payload.data);
   }
-
   @MessagePattern({ cmd: 'product.delete' })
   deleteProduct(@Payload() payload: any): Promise<Product> {
     return this.productService.deleteProduct(payload.id);
   }
 
+  // Complex Function Handlers
   @MessagePattern({ cmd: 'product.getByType' })
   getByType(@Payload() payload: any): Promise<Product[]> {
     console.log(payload.type, payload.value);
     return this.productService.getByType(payload.type, payload.value);
   }
-
   @MessagePattern({ cmd: 'product.getByRange' })
   getByRange(@Payload() payload: any): Promise<Product[]> {
     return this.productService.getByRange(
@@ -45,5 +43,15 @@ export class ProductController {
       parseInt(payload?.min),
       parseInt(payload?.max),
     );
+  }
+
+  // Statistics Function Handlers
+  @MessagePattern({ cmd: 'product.getTotal' })
+  getTotalProducts(): Promise<number> {
+    return this.productService.getTotalProducts();
+  }
+  @MessagePattern({ cmd: 'product.getTotalByType' })
+  getTotalProductsByType(@Payload() payload: any): Promise<number> {
+    return this.productService.getTotalProductsByType(payload.type);
   }
 }

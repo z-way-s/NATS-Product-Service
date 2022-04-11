@@ -63,7 +63,6 @@ export class ProductService {
       isDeleted: product.isDeleted,
     }));
   }
-
   async getProduct(id: string): Promise<Product> {
     let res;
     try {
@@ -93,7 +92,6 @@ export class ProductService {
       isDeleted: res.isDeleted,
     };
   }
-
   async updateProduct(id: string, product: EditProductDto): Promise<Product> {
     let res;
     try {
@@ -156,7 +154,6 @@ export class ProductService {
   }
 
   // Complex Functions
-
   async getByType(type: Type, value: string): Promise<Product[]> {
     let res;
     const query = {};
@@ -189,7 +186,6 @@ export class ProductService {
       isDeleted: product.isDeleted,
     }));
   }
-
   async getByRange(type: Type, min?: number, max?: number): Promise<Product[]> {
     let res;
     const query = {};
@@ -201,7 +197,6 @@ export class ProductService {
       query[type] = { $lte: max };
     }
     query[type];
-    console.log(query);
     try {
       res = await this.productModel.find(query);
     } catch (error) {
@@ -228,5 +223,34 @@ export class ProductService {
       isActive: product.isActive,
       isDeleted: product.isDeleted,
     }));
+  }
+
+  // Statistics
+  // -- Total Products
+  async getTotalProducts(): Promise<number> {
+    let res;
+    try {
+      res = await this.productModel.find();
+    } catch (error) {
+      throw new Error('Error getting product');
+    }
+    if (!res) {
+      throw new Error('Error getting product');
+    }
+    return res.length;
+  }
+  async getTotalProductsByType(type: Type): Promise<number> {
+    let res;
+    const query = {};
+    query[type] = { $exists: true };
+    try {
+      res = await this.productModel.find(query);
+    } catch (error) {
+      throw new Error('Error getting product');
+    }
+    if (!res) {
+      throw new Error('Error getting product');
+    }
+    return res.length;
   }
 }
